@@ -35,7 +35,7 @@ public:
 
 
     /**
-     * Hilfsfunktion um zu berechnen ob Punkt x zwischen Punkten a und b liegt.
+     * Hilfsfunktion um zu berechnen ob Punkt x in einer Dimension zwischen Punkten a und b liegt. Wenn das in einer stimmt, dann ist das auch in den Anderen so, da die Schnittpunkte auf der Geraden zwischen a und b liegen.
      * @return True wenn dazwischen, false wenn nicht.
      */
     bool between(Punkt a, Punkt b, Punkt x) const {
@@ -53,26 +53,35 @@ public:
 
       // Neue Gerade!
       Gerade G(a, b);
-      // Checken ob a definitiv innen und b definitv aussen ist:
 
 
+//Versuche:
 	try {
+      //
 	    Punkt links = G.SchnittEbeneYZ(- breite / 2);
-
+      //Sagt wo der Schnittpunkt mit der Ebene ist. (der Punkt heisst links)(nur wenn DEBUG an ist)
       if(DEBUG) std::cout << "Schnittpunkt mit linker Ebene ist: " << links << std::endl;
+      // Prueft ob der Punkt links auf der Seitenflaeche von dem Quader ist, wenn ja, dann...
 	    if((links.z() >= -hoehe && links.z() <= 0) && (links.y() >= laenge / 2 && links.y() <= - laenge / 2)) {
+                // sagt der wo der SChnittpunkt ist. (nur wenn DEBUG an ist)
                 if(DEBUG) std::cout << "Schnittpunkt mit linker Seitenflaeche ist: " << links << std::endl;
                 // Ueberpruefen, ob der Schnittpunkt wirlich zwischen a und b liegt und somit der Schnittpunkt sein kann:
                 if(between(a, b, links)) {
+                  //Wenn ja, dann gib links zurueck, da der der Schnittpunkt ist.
                     return links;
+                    // sonst sagt der (nur wenn DEBUG an ist)
                   } else if (DEBUG) {
+                    // das
                     std::cout << "Schnittpunkt mit linker Seitenflaeche nicht zwischen den Punkten." << std::endl;
                 }
+            // Der schnittpunkt ist nicht auf den Quader aber auf der Seitenflaeche
             } else if(DEBUG) {
-              if(DEBUG) std::cout << "Kein Schnittpunkt mit linker Seitenflaeche." << std::endl;
+                std::cout << "Kein Schnittpunkt mit linker Seitenflaeche." << std::endl;
             }
+        //Wenn das nicht funktioniert,also es keinen SChnittpunktmit linker Ebene gibt, mach das:
        } catch(std::runtime_error& e) {
-           if(DEBUG) std::cout << e.what() << std::endl;
+         // sagt was der Fehler ist (e)
+          if(DEBUG) std::cout << e.what() << std::endl;
        }
 
   try {
@@ -86,7 +95,7 @@ public:
                   std::cout << "Schnittpunkt mit rechter Seitenflaeche nicht zwischen den Punkten." << std::endl;
                 }
             } else if(DEBUG) {
-              if(DEBUG) std::cout << "Kein Schnittpunkt mit rechter Seitenflaeche." << std::endl;
+              std::cout << "Kein Schnittpunkt mit rechter Seitenflaeche." << std::endl;
             }
 	     } catch(...) {
            if(DEBUG) std::cout << "Kein Schnittpunkt mit rechter Ebene." << std::endl;
@@ -103,7 +112,7 @@ public:
                   std::cout << "Schnittpunkt mit unterer Seitenflaeche nicht zwischen den Punkten." << std::endl;
               }
           } else if(DEBUG) {
-            if(DEBUG) std::cout << "Kein Schnittpunkt mit unterer Seitenflaeche." << std::endl;
+            std::cout << "Kein Schnittpunkt mit unterer Seitenflaeche." << std::endl;
           }
       } catch(...) {
           if(DEBUG) std::cout << "Kein Schnittpunkt mit unterer Ebene." << std::endl;
@@ -121,7 +130,7 @@ public:
                   std::cout << "Schnittpunkt mit vorderer Seitenflaeche nicht zwischen den Punkten." << std::endl;
                 }
         } else if(DEBUG) {
-          if(DEBUG) std::cout << "Kein Schnittpunkt mit vorderer Seitenflaeche." << std::endl;
+          std::cout << "Kein Schnittpunkt mit vorderer Seitenflaeche." << std::endl;
         }
       } catch(...) {
           if(DEBUG) std::cout << "Kein Schnittpunkt mit vorderer Ebene." << std::endl;
@@ -139,7 +148,7 @@ public:
                   std::cout << "Schnittpunkt mit hinterer Seitenflaeche nicht zwischen den Punkten." << std::endl;
             }
         } else if(DEBUG) {
-          if(DEBUG) std::cout << "Kein Schnittpunkt mit hinterer Seitenflaeche." << std::endl;
+          std::cout << "Kein Schnittpunkt mit hinterer Seitenflaeche." << std::endl;
         }
       } catch(...) {
           if(DEBUG) std::cout << "Kein Schnittpunkt mit hinterer Ebene." << std::endl;

@@ -27,6 +27,7 @@ public:
     double x() const { return x_; }
     // Wir rufen die "private" Variable y_ ab:
     double y() const { return y_; }
+    // Wir rufen die private Variable z_ ab:
     double z() const { return z_; }
 
     friend std::ostream& operator<<(std::ostream& os, const Punkt& p);
@@ -47,12 +48,12 @@ Punkt operator+(const Punkt &a, const Punkt &b) {
   return Punkt(a.x() + b.x(),a.y() + b.y(),a.z() + b.z());
 }
 
-// So rechnest du eine zahl (double) mal einen Punkt
+// So rechnest du eine Zahl (double) mal einen Punkt
 Punkt operator*(const double &a, const Punkt &b) {
   return Punkt(a * b.x(),a * b.y(),a * b.z());
 }
 
-
+// So druckt man Punkte aus
 std::ostream& operator<<(std::ostream& os, const Punkt& p) {
     os << p.x() << "," << p.y() << "," << p.z();
     return os;
