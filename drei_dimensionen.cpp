@@ -1,41 +1,10 @@
 #include <iostream>
 
+#include "Punkt.hpp"
+
+#include "gerade.hpp"
+
 #define DEBUG 1
-
-// Wir definiern eine neue Klasse (Datentype) namens Punkt
-class Punkt {
-// Alle Dinge, auf die man von aussen zugreifen darf:
-public:
-    /**
-     * "Konstruktor" - Funktion, die aufgerufen wird, wenn wir ein neues Objekt vom Typ "Punkt" erzeugen
-     * @param x X-Koorinate
-     * @param y Y-Koorinate
-     */
-    Punkt(double x, double y, double z) {
-        // Wir speichern die Parameter des Konstruktors in den "privaten" Variablen x_ y_ und z_:
-        x_ = x;
-        y_ = y;
-        z_ = z;
-    };
-
-    // Wir rufen die "private" Variable x_ ab:
-    double x() const { return x_; }
-    // Wir rufen die "private" Variable y_ ab:
-    double y() const { return y_; }
-    double z() const { return z_; }
-
-    friend std::ostream& operator<<(std::ostream& os, const Punkt& p);
-// Dinge, auf die nur der Punkt selbst Zuriff hat:
-private:
-    double x_;
-    double y_;
-    double z_;
-};
-
-std::ostream& operator<<(std::ostream& os, const Punkt& p) {
-    os << p.x() << "," << p.y() << "," << p.z();
-    return os;
-}
 
 // Wir definieren eine neue Klasse (Datentyp), benannt nach dem Siliziumdetektor-Dings:
 class Implant {
@@ -64,112 +33,6 @@ public:
         return hoehe * breite * laenge;
     };
 
-    /**
-     * Funktion zur Berechnung des Schnittpunks der Geraden durch zwei Punkte a und b mit der linken Seite des Implants
-     * @param  a Ein Punkt
-     * @param  b Anderer Punkt
-     * @return  Schnittpunkt auf geraden der linken Seite
-     */
-     //Schnittpunkt hat x,y,z und 3 differenzen (lange strecken), 3 kurze strecken => lage des schnittpunkts
-     //x= -breite/2  y= a.y() - kurz_y z=
-    Punkt schnittpunktLinks(Punkt a, Punkt b) const {
-        double differenz_x = b.x() - a.x();
-        if(differenz_x == 0) {
-            throw std::runtime_error("");
-        }
-
-        double differenz_y = b.y() - a.y();
-        double differenz_z = b.z() - a.z();
-
-        double kurz_x = a.x() + breite/2;
-        double kurz_y = kurz_x * differenz_y / differenz_x;
-        double kurz_z = kurz_x * differenz_z / differenz_x;
-
-        return Punkt(- breite / 2, a.y() - kurz_y,a.z() - kurz_z);
-    };
-
-    /**
-     * siehe schnittpunktLinks
-     */
-
-    Punkt schnittpunktRechts(Punkt a, Punkt b) const {
-
-        double differenz_x = b.x() - a.x();
-        if(differenz_x == 0) {
-            throw std::runtime_error("");
-        }
-
-        double differenz_y = b.y() - a.y();
-        double differenz_z = b.z() - a.z();
-
-        double kurz_x = a.z() - breite/2;
-        double kurz_y = kurz_x * differenz_y / differenz_x;
-        double kurz_z = kurz_x * differenz_z / differenz_x;
-
-
-        return Punkt(+ breite / 2, a.y() - kurz_y, a.z() - kurz_z);
-    };
-
-    /**
-     * siehe schnittpunktLinks
-     */
-    Punkt schnittpunktUnten(Punkt a, Punkt b) const {
-        double differenz_x = b.x() - a.x();
-        double differenz_y = b.y() - a.y();
-        double differenz_z = b.z() - a.z();
-        if(differenz_z == 0) {
-            throw std::runtime_error("");
-        }
-
-	       double kurz_z = a.z() + hoehe;
-	       double kurz_y = kurz_z * differenz_y / differenz_z;
-         double kurz_x = kurz_z * differenz_x / differenz_z;
-
-        return Punkt(a.x() - kurz_x, a.y() - kurz_y, - hoehe );
-    };
-
-/** x= laenge / 2
-y= a.y - kurz_y
-z= a.z - kurz_z
-*/
-    Punkt schnittpunktVorne (Punkt a, Punkt b) const {
-      double differenz_x = b.x() - a.x();
-      double differenz_y = b.y() - a.y();
-      if(differenz_y == 0) {
-          throw std::runtime_error("");
-      }
-      double differenz_z = b.z() - a.z();
-
-      double kurz_y = laenge / 2;
-      double kurz_x = kurz_y * differenz_x / differenz_y;
-      double kurz_z = kurz_y * differenz_z / differenz_y;
-
-      return Punkt(a.x() - kurz_x, kurz_y, a.z() - kurz_z );
-
-
-    }
-/**
-x=
-y=
-z=
-*/
-    Punkt schnittpunktHinten (Punkt a, Punkt b) const {
-      double differenz_x = b.x() - a.x();
-      double differenz_y = b.y() - a.y();
-      if(differenz_y == 0) {
-          throw std::runtime_error("");
-      }
-      double differenz_z = b.z() - a.z();
-
-      double kurz_y = - laenge / 2;
-      double kurz_x = kurz_y * differenz_x / differenz_y;
-      double kurz_z = kurz_y * differenz_z / differenz_y;
-
-      return Punkt(a.x() - kurz_x, kurz_y, a.z() - kurz_z );
-
-
-    }
-
 
     /**
      * Hilfsfunktion um zu berechnen ob Punkt x zwischen Punkten a und b liegt.
@@ -188,11 +51,14 @@ z=
      */
     Punkt schnittpunkt(Punkt a, Punkt b) const {
 
+      // Neue Gerade!
+      Gerade G(a, b);
       // Checken ob a definitiv innen und b definitv aussen ist:
-      
+
 
 	try {
-	    Punkt links = schnittpunktLinks(a, b);
+	    Punkt links = G.SchnittEbeneYZ(- breite / 2);
+
       if(DEBUG) std::cout << "Schnittpunkt mit linker Ebene ist: " << links << std::endl;
 	    if((links.z() >= -hoehe && links.z() <= 0) && (links.y() >= laenge / 2 && links.y() <= - laenge / 2)) {
                 if(DEBUG) std::cout << "Schnittpunkt mit linker Seitenflaeche ist: " << links << std::endl;
@@ -205,12 +71,12 @@ z=
             } else if(DEBUG) {
               if(DEBUG) std::cout << "Kein Schnittpunkt mit linker Seitenflaeche." << std::endl;
             }
-       } catch(...) {
-           if(DEBUG) std::cout << "Kein Schnittpunkt mit linker Ebene." << std::endl;
+       } catch(std::runtime_error& e) {
+           if(DEBUG) std::cout << e.what() << std::endl;
        }
 
   try {
-       	     Punkt rechts = schnittpunktRechts(a, b);
+       	     Punkt rechts = G.SchnittEbeneYZ(breite / 2);
              if(DEBUG) std::cout << "Schnittpunkt mit rechter Ebene ist: " << rechts << std::endl;
        	     if((rechts.z() >= -hoehe && rechts.z() <= 0) && (rechts.y() >= laenge / 2 && rechts.y() <= - laenge / 2)) {
                 if(DEBUG) std::cout << "Schnittpunkt mit rechter Seitenflaeche ist: " << rechts << std::endl;
@@ -227,7 +93,7 @@ z=
        }
 
   try {
-            Punkt unten = schnittpunktUnten(a,b);
+            Punkt unten = G.SchnittEbeneXY(-hoehe);
             if(DEBUG) std::cout << "Schnittpunkt mit unterer Ebene ist: " << unten << std::endl;
             if((unten.x() >= - breite / 2 && unten.x() <= breite / 2) && (unten.y() >= - laenge / 2 && unten.y() <= laenge / 2)) {
                 if(DEBUG) std::cout << "Schnittpunkt mit unterer Seitenflaeche ist: " << unten << std::endl;
@@ -245,7 +111,7 @@ z=
 	//Vorne:
 
   try {
-          Punkt vorne = schnittpunktVorne(a, b);
+          Punkt vorne = G.SchnittEbeneXZ(laenge / 2);
           if(DEBUG) std::cout << "Schnittpunkt mit vorderer Ebene ist: " << vorne << std::endl;
 	         if((vorne.y() >= - laenge / 2 && vorne.y() <= laenge / 2) && (vorne.z() >= - hoehe && vorne.z()<= 0 )) {
                 if(DEBUG) std::cout << "Schnittpunkt mit vorderer Seitenflaeche ist: " << vorne << std::endl;
@@ -263,7 +129,7 @@ z=
 	//Hinten:
 
   try {
-          Punkt hinten = schnittpunktHinten(a, b);
+          Punkt hinten = G.SchnittEbeneXZ(laenge / 2);
           if(DEBUG) std::cout << "Schnittpunkt mit hinterer Ebene ist: " << hinten << std::endl;
 	        if((hinten.y() >= - laenge / 2 && hinten.y() <= laenge / 2) && (hinten.z() >= - hoehe && hinten.z()<= 0 )) {
                 if(DEBUG) std::cout << "Schnittpunkt mit hinterer Seitenflaeche ist: " << hinten << std::endl;
@@ -298,7 +164,11 @@ int main() {
     // Siehe oben - nur mit Punkten...
     // Hier wird immer der "Konstruktor" der Klasse aufgerufen!
     Punkt eins(0, 1, -2);
-    Punkt zwei(3, -3, -2);
+    Punkt zwei(1, -3, -2);
+    Gerade G(eins,zwei);
+
+    std::cout << eins << " - " << zwei << " = " << (eins - zwei) << std::endl;
+    std::cout << "G(5) = " << G.at(5) << std::endl;
 
     // Versuche mal folgendes...
     try {
