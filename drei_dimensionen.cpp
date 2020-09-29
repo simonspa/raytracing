@@ -97,8 +97,8 @@ public:
             } else if(DEBUG) {
               std::cout << "Kein Schnittpunkt mit rechter Seitenflaeche." << std::endl;
             }
-	     } catch(...) {
-           if(DEBUG) std::cout << "Kein Schnittpunkt mit rechter Ebene." << std::endl;
+	     } catch(std::runtime_error& e) {
+           if(DEBUG) std::cout << e.what() << std::endl;
        }
 
   try {
@@ -114,8 +114,8 @@ public:
           } else if(DEBUG) {
             std::cout << "Kein Schnittpunkt mit unterer Seitenflaeche." << std::endl;
           }
-      } catch(...) {
-          if(DEBUG) std::cout << "Kein Schnittpunkt mit unterer Ebene." << std::endl;
+      } catch(std::runtime_error& e) {
+          if(DEBUG) std::cout << e.what() << std::endl;
         }
 	//Vorne:
 
@@ -132,8 +132,8 @@ public:
         } else if(DEBUG) {
           std::cout << "Kein Schnittpunkt mit vorderer Seitenflaeche." << std::endl;
         }
-      } catch(...) {
-          if(DEBUG) std::cout << "Kein Schnittpunkt mit vorderer Ebene." << std::endl;
+      } catch(std::runtime_error& e) {
+          if(DEBUG) std::cout << e.what()<< std::endl;
         }
 	//Hinten:
 
@@ -150,8 +150,8 @@ public:
         } else if(DEBUG) {
           std::cout << "Kein Schnittpunkt mit hinterer Seitenflaeche." << std::endl;
         }
-      } catch(...) {
-          if(DEBUG) std::cout << "Kein Schnittpunkt mit hinterer Ebene." << std::endl;
+      } catch(std::runtime_error& e) {
+          if(DEBUG) std::cout << e.what()<< std::endl;
         }
 
         throw std::runtime_error("Kein Schnittpunkt");
