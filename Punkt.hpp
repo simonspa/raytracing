@@ -37,15 +37,17 @@ private:
     double z_;
 };
 
-
+// so rechnest du Punkte minus
 Punkt operator-(const Punkt &a, const Punkt &b) {
   return Punkt(a.x() - b.x(),a.y() - b.y(),a.z() - b.z());
 }
 
+// So rechnest du Punkte plus
 Punkt operator+(const Punkt &a, const Punkt &b) {
   return Punkt(a.x() + b.x(),a.y() + b.y(),a.z() + b.z());
 }
 
+// So rechnest du eine zahl (double) mal einen Punkt
 Punkt operator*(const double &a, const Punkt &b) {
   return Punkt(a * b.x(),a * b.y(),a * b.z());
 }
