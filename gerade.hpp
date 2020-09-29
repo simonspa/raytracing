@@ -23,8 +23,8 @@ public:
         throw std::runtime_error("Gerade parallel zu YZ-Ebene");
       }
 
-      double t = a_.x() - x / u_.x();
-      return Punkt(x, a_.y() + t * u_.y(), a_.z() + t * u_.z());
+      double t = (x - a_.x()) / u_.x();
+      return at(t);
   };
 
   // So berechnet man den Schnittpunkt mit einer ebene, die nur einen Y-Wert hat.
@@ -34,8 +34,8 @@ public:
         throw std::runtime_error("Gerade parallel zu XZ-Ebene");
       }
 
-      double t = a_.y() - y / u_.y();
-      return Punkt(a_.x() + t * u_.x(), y, a_.z() + t * u_.z());
+      double t = (y - a_.y()) / u_.y();
+      return at(t);
   };
 
   // So berechnet man den Schnittpunkt mit einer ebene, die nur einen Z-Wert hat.
@@ -45,8 +45,8 @@ public:
         throw std::runtime_error("Gerade parallel zu XY-Ebene");
       }
 
-      double t = a_.z() - z / u_.z();
-      return Punkt(a_.x() + t * u_.x(), a_.y() + t * u_.y(), z);
+      double t = (z - a_.z()) / u_.z();
+      return at(t);
   };
 
 
