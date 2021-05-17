@@ -18,8 +18,8 @@ int main() {
 
     // Siehe oben - nur mit Punkten...
     // Hier wird immer der "Konstruktor" der Klasse aufgerufen!
-    Punkt one(1, -1, -2.5);
-    Punkt two(2, 4, -2.5);
+    point one(1, -1, -2.5);
+    point two(2, 4, -2.5);
     Gerade G(one,two);
 
     std::cout << one << " - " << two << " = " << (one - two) << std::endl;
@@ -27,7 +27,7 @@ int main() {
 
     // Versuche mal folgendes...
     try {
-        Punkt schnitt = my_implant.schnittpunkt(one, two);
+        point schnitt = my_implant.schnittpunkt(one, two);
 
         std::cout << "intersection point: " << schnitt.x() << ", " << schnitt.y() << ", " << schnitt.z() << std::endl;
 

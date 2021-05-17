@@ -30,7 +30,7 @@ public:
      * Hilfsfunktion um zu berechnen ob Punkt x in einer Dimension zwischen Punkten a und b liegt. Wenn das in einer stimmt, dann ist das auch in den Anderen so, da die Schnittpunkte auf der Geraden zwischen a und b liegen.
      * @return True wenn dazwischen, false wenn nicht.
      */
-    bool between(Punkt a, Punkt b, Punkt x) const {
+    bool between(point a, point b, point x) const {
         return (x.y() <= a.y() && x.y() >= b.y()) || (x.y() >= a.y() && x.y() <= b.y());
     };
 
@@ -41,7 +41,7 @@ public:
      * @return   Schnittpunkt
      * @throws runtime_error wenn kein Schnittpunkt gefunden werden kann
      */
-    Punkt schnittpunkt(Punkt a, Punkt b) const {
+    point schnittpunkt(point a, point b) const {
 
       // Neue Gerade!
       Gerade G(a, b);
@@ -50,7 +50,7 @@ public:
 //Versuche:
 	try {
       //
-	    Punkt links = G.SchnittEbeneYZ(- breite / 2);
+	    point links = G.SchnittEbeneYZ(- breite / 2);
       //Sagt wo der Schnittpunkt mit der Ebene ist. (der Punkt heisst links)(nur wenn DEBUG an ist)
       if(DEBUG) std::cout << "Schnittpunkt mit linker Ebene ist: " << links << std::endl;
       // Prueft ob der Punkt links auf der Seitenflaeche von dem Quader ist, wenn ja, dann...
@@ -77,7 +77,7 @@ public:
        }
 
   try {
-       	     Punkt rechts = G.SchnittEbeneYZ(breite / 2);
+       	     point rechts = G.SchnittEbeneYZ(breite / 2);
              if(DEBUG) std::cout << "Schnittpunkt mit rechter Ebene ist: " << rechts << std::endl;
        	     if((rechts.z() >= -hoehe && rechts.z() <= 0) && (rechts.y() >= laenge / 2 && rechts.y() <= - laenge / 2)) {
                 if(DEBUG) std::cout << "Schnittpunkt mit rechter Seitenflaeche ist: " << rechts << std::endl;
@@ -94,7 +94,7 @@ public:
        }
 
   try {
-            Punkt unten = G.SchnittEbeneXY(-hoehe);
+            point unten = G.SchnittEbeneXY(-hoehe);
             if(DEBUG) std::cout << "Schnittpunkt mit unterer Ebene ist: " << unten << std::endl;
             if((unten.x() >= - breite / 2 && unten.x() <= breite / 2) && (unten.y() >= - laenge / 2 && unten.y() <= laenge / 2)) {
                 if(DEBUG) std::cout << "Schnittpunkt mit unterer Seitenflaeche ist: " << unten << std::endl;
@@ -112,7 +112,7 @@ public:
 	//Vorne:
 
   try {
-          Punkt vorne = G.SchnittEbeneXZ(laenge / 2);
+          point vorne = G.SchnittEbeneXZ(laenge / 2);
           if(DEBUG) std::cout << "Schnittpunkt mit vorderer Ebene ist: " << vorne << std::endl;
 	         if((vorne.y() >= - laenge / 2 && vorne.y() <= laenge / 2) && (vorne.z() >= - hoehe && vorne.z()<= 0 )) {
                 if(DEBUG) std::cout << "Schnittpunkt mit vorderer Seitenflaeche ist: " << vorne << std::endl;
@@ -130,7 +130,7 @@ public:
 	//Hinten:
 
   try {
-          Punkt hinten = G.SchnittEbeneXZ(-laenge / 2);
+          point hinten = G.SchnittEbeneXZ(-laenge / 2);
           if(DEBUG) std::cout << "Schnittpunkt mit hinterer Ebene ist: " << hinten << std::endl;
 	        if((hinten.y() >= - laenge / 2 && hinten.y() <= laenge / 2) && (hinten.z() >= - hoehe && hinten.z()<= 0 )) {
                 if(DEBUG) std::cout << "Schnittpunkt mit hinterer Seitenflaeche ist: " << hinten << std::endl;
