@@ -14,35 +14,35 @@
 int main() {
 
     // Lasst uns ein Implant definieren ("Wir erzeugen ein Objekt der Klasse Implant")
-    Implant meins( 4, 4, 4);
+    Implant my_implant( 4, 4, 4);
 
     // Siehe oben - nur mit Punkten...
     // Hier wird immer der "Konstruktor" der Klasse aufgerufen!
-    Punkt eins(1, -1, -2.5);
-    Punkt zwei(2, 4, -2.5);
-    Gerade G(eins,zwei);
+    Punkt one(1, -1, -2.5);
+    Punkt two(2, 4, -2.5);
+    Gerade G(one,two);
 
-    std::cout << eins << " - " << zwei << " = " << (eins - zwei) << std::endl;
+    std::cout << one << " - " << two << " = " << (one - two) << std::endl;
     std::cout << "G(5) = " << G.at(5) << std::endl;
 
     // Versuche mal folgendes...
     try {
-        Punkt schnitt = meins.schnittpunkt(eins, zwei);
+        Punkt schnitt = my_implant.schnittpunkt(one, two);
 
-        std::cout << "Schnittpunkt: " << schnitt.x() << ", " << schnitt.y() << ", " << schnitt.z() << std::endl;
+        std::cout << "intersection point: " << schnitt.x() << ", " << schnitt.y() << ", " << schnitt.z() << std::endl;
 
         if (G.enthaelt(schnitt)){
-          std::cout << "Test lief schief" << std::endl;
+          std::cout << "test didn't work!" << std::endl;
         }
         else{
-          std::cout << "Test hat geklappt" << std::endl;
+          std::cout << "test did work!" << std::endl;
         }
         // Gib dem Terminal eine Null zurueck: "Alles klar, keine Probleme gehabt!"
         return 0;
 
     } catch(std::runtime_error& e) {
         // ...wenn's schief geht, dann drucke das hier:
-        std::cout << "Problem: " << e.what() << std::endl;
+        std::cout << "problem: " << e.what() << std::endl;
     }
 
 
