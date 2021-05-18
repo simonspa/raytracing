@@ -43,7 +43,7 @@ point operator-(const point &a, const point &b) {
   return point(a.x() - b.x(),a.y() - b.y(),a.z() - b.z());
 }
 
-// So rechnest du pointe plus
+// So rechnest du points plus
 point operator+(const point &a, const point &b) {
   return point(a.x() + b.x(),a.y() + b.y(),a.z() + b.z());
 }
