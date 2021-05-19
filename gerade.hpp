@@ -5,19 +5,19 @@ class Gerade {
 
 public:
   //Das ist eine Gerade
-  Gerade(Punkt a, Punkt b) {
+  Gerade(point a, point b) {
     // Die Dinger gibt es auch ausserhalb der Klammer, a und b nicht.
     a_ = a;
     u_ = (b - a);
 
   }
 //Du bist auf der Geraden. Der Punkt wird ausgespuckt und t wird rein gegeben.
-  Punkt at(double t) {
+  point at(double t) {
     return (a_ + t * u_);
   }
 
   // So berechnet man den Schnittpunkt mit einer ebene, die nur einen X-Wert hat.
-  Punkt SchnittEbeneYZ(double x) {
+  point SchnittEbeneYZ(double x) {
       // gucke ob die Gerade Parallel zu der Ebene ist.
       if(u_.x() == 0) {
         throw std::runtime_error("Gerade parallel zu YZ-Ebene");
@@ -28,7 +28,7 @@ public:
   };
 
   // So berechnet man den Schnittpunkt mit einer ebene, die nur einen Y-Wert hat.
-  Punkt SchnittEbeneXZ(double y) {
+  point SchnittEbeneXZ(double y) {
       // gucke ob die Gerade Parallel zu der Ebene ist.
       if(u_.y() == 0) {
         throw std::runtime_error("Gerade parallel zu XZ-Ebene");
@@ -39,7 +39,7 @@ public:
   };
 
   // So berechnet man den Schnittpunkt mit einer ebene, die nur einen Z-Wert hat.
-  Punkt SchnittEbeneXY(double z) {
+  point SchnittEbeneXY(double z) {
       // gucke ob die Gerade Parallel zu der Ebene ist.
       if(u_.z() == 0) {
         throw std::runtime_error("Gerade parallel zu XY-Ebene");
@@ -55,6 +55,6 @@ private:
     u_ b-a
     koennen nicht veraendert werden, die gibt es auch ausserhalb der Klammer, aber nur in der Klasse
   */
-  Punkt a_;
-  Punkt u_;
+  point a_;
+  point u_;
 };
